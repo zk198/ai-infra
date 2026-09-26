@@ -2,7 +2,10 @@ include:
   - ../rag-ingestion/docker-compose.yml
   - ../rag-indexer/compose.yaml
   - ../rag-retrieval/compose.yaml
-  - ../rag-gateway/compose.yaml
+  - ../ai-gateway/compose.yaml
+  - ../agent-core/docker-compose.yml
+  - ../agent-tools-web/docker-compose.yml
+  - ../agent-tools-code/docker-compose.yml
 
 services:
   qdrant:
@@ -18,6 +21,12 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
+
+  agent-core:
+    ports: []
+
+  web:
+    ports: []
 
 volumes:
   qdrant-data:
