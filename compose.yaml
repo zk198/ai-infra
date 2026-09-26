@@ -22,11 +22,6 @@ services:
       retries: 10
       start_period: 10s
 
-  agent-core:
-    ports: []
-
-  web:
-    ports: []
 
 volumes:
   qdrant-data:
