@@ -13,7 +13,7 @@ rag-infra/
 rag-ingestion/
 rag-indexer/
 rag-retrieval/
-rag-gateway/
+ai-gateway/
 ```
 
 Then copy `.env.example` to `.env`, set a real JWT secret, and run:
