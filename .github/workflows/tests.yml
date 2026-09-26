@@ -25,7 +25,7 @@ jobs:
           git clone --depth 1 https://github.com/zk198/rag-retrieval.git ../rag-retrieval
           git clone --depth 1 https://github.com/zk198/ai-gateway.git ../ai-gateway
           git clone --depth 1 https://github.com/zk198/agent-core.git ../agent-core
-          git clone --depth 1 https://github.com/zk198/agent-tools-web.git ../agent-tools-web
+          git clone --depth 1 --branch phase-1c-internal-compose https://github.com/zk198/agent-tools-web.git ../agent-tools-web
           git clone --depth 1 https://github.com/zk198/agent-tools-code.git ../agent-tools-code
       - name: Validate integrated Compose
         env:
