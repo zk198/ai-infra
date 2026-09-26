@@ -31,8 +31,8 @@ def test_environment_has_no_default_secret():
     assert "replace-me" not in env
 
 
-def test_ai_gateway_is_only_published_application_service():
+def test_integrated_compose_does_not_redefine_included_services():
     compose = (ROOT / "compose.yaml").read_text()
-    assert '  agent-core:\n    ports: []' in compose
-    assert '  web:\n    ports: []' in compose
+    assert "  agent-core:" not in compose
+    assert "  web:" not in compose
     assert "../ai-gateway/compose.yaml" in compose
