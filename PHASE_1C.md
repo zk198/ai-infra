@@ -49,7 +49,7 @@ Phase 1.c builds on the Phase 1.b retrieval UI without changing the meaning of t
 
 ## Architectural constraints
 
-- The browser talks only to rag-gateway.
+- The browser talks only to ai-gateway.
 - PostgreSQL remains the authoritative store.
 - Qdrant remains a rebuildable retrieval index.
 - The search endpoint remains retrieval-only and returns ranked evidence.

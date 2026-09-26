@@ -13,7 +13,7 @@ rag-infra/
 rag-ingestion/
 rag-indexer/
 rag-retrieval/
-rag-gateway/
+ai-gateway/
 ```
 
 Then copy `.env.example` to `.env`, set a real JWT secret, and run:
@@ -22,6 +22,6 @@ Then copy `.env.example` to `.env`, set a real JWT secret, and run:
 docker compose up --build
 ```
 
-The gateway is exposed on port 8000. PostgreSQL remains the authoritative source of truth and Qdrant is a rebuildable search index.
+The AI gateway is exposed on port 8200; internal agent/tool services are not published to the host. PostgreSQL remains the authoritative source of truth and Qdrant is a rebuildable search index.
 
 Qdrant is pinned to v1.19.1 for reproducible local integration. Production image digests and registry-based deployment are handled in Part 2.
