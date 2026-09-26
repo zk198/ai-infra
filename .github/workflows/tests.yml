@@ -1,4 +1,5 @@
 name: tests
+# Full AI backend composition validation
 
 on:
   push:
