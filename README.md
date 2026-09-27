@@ -18,8 +18,6 @@ agent-core/
 agent-tools-web/
 agent-tools-code/
 ai-ui/
-llm-gateway/
-llm-inference/
 ```
 
 Then copy `.env.example` to `.env`, set a real JWT secret, and run:
