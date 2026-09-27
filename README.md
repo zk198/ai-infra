@@ -1,6 +1,6 @@
-# RAG Infrastructure
+# AI Infrastructure
 
-Local integration composition for the RAG stack.
+Local integration composition for the AI stack.
 
 The application repositories own their service Compose definitions. This repository uses Compose `include` rather than duplicating those service definitions.
 
@@ -9,11 +9,15 @@ The application repositories own their service Compose definitions. This reposit
 Check out these repositories as siblings:
 
 ```
-rag-infra/
+ai-infra/
 rag-ingestion/
 rag-indexer/
 rag-retrieval/
 ai-gateway/
+agent-core/
+agent-tools-web/
+agent-tools-code/
+ai-ui/
 ```
 
 Then copy `.env.example` to `.env`, set a real JWT secret, and run:
