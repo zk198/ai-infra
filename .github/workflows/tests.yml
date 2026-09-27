@@ -30,7 +30,6 @@ jobs:
           git clone --depth 1 https://github.com/zk198/ai-ui.git ../ai-ui
       - name: Validate stack health script syntax
         run: |
-          test -x scripts/check-stack-health.sh
           sh -n scripts/check-stack-health.sh
       - name: Validate integrated Compose
         env:
