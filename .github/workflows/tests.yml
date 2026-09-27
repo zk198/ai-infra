@@ -33,9 +33,13 @@ jobs:
           RAG_JWT_SECRET: ci-test-secret
         run: docker compose config
       - name: Validate optional LLM Compose when sibling repos are available
-        if: ${{ hashFiles('../llm-gateway/docker-compose.yml', '../llm-inference/docker-compose.yml') != '' }}
         env:
           RAG_JWT_SECRET: ci-test-secret
           BIFROST_ENCRYPTION_KEY: ci-test-encryption-key
           SGLANG_API_KEY: local
-        run: docker compose -f compose.yaml -f compose.llm.yaml config
+        run: |
+          if [ -f ../llm-gateway/docker-compose.yml ] && [ -f ../llm-inference/docker-compose.yml ]; then
+            docker compose -f compose.yaml -f compose.llm.yaml config
+          else
+            echo "Skipping optional LLM Compose validation; private LLM sibling repositories are not present in this CI workspace."
+          fi
