@@ -28,6 +28,10 @@ jobs:
           git clone --depth 1 https://github.com/zk198/agent-tools-web.git ../agent-tools-web
           git clone --depth 1 https://github.com/zk198/agent-tools-code.git ../agent-tools-code
           git clone --depth 1 https://github.com/zk198/ai-ui.git ../ai-ui
+      - name: Validate stack health script syntax
+        run: |
+          test -x scripts/check-stack-health.sh
+          sh -n scripts/check-stack-health.sh
       - name: Validate integrated Compose
         env:
           RAG_JWT_SECRET: ci-test-secret
