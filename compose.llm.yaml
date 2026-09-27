@@ -1,0 +1,23 @@
+# Optional local GPU LLM stack.
+#
+# The LLM repositories remain the owners of their Compose definitions.
+# This file includes them and only adds integration aliases so existing
+# agent-core/Bifrost service URLs resolve without duplicating definitions.
+include:
+  - ../llm-gateway/docker-compose.yml
+  - ../llm-inference/docker-compose.yml
+
+services:
+  gateway:
+    ports: !reset []
+    networks:
+      default:
+        aliases:
+          - llm-gateway
+
+  inference:
+    ports: !reset []
+    networks:
+      default:
+        aliases:
+          - llm-inference
