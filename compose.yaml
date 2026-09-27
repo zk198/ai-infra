@@ -6,6 +6,7 @@ include:
   - ../agent-core/docker-compose.yml
   - ../agent-tools-web/docker-compose.yml
   - ../agent-tools-code/docker-compose.yml
+  - ../ai-ui/compose.yaml
 
 services:
   qdrant:
@@ -21,7 +22,6 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
-
 
 volumes:
   qdrant-data:

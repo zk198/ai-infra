@@ -1,5 +1,5 @@
 name: tests
-# Full AI backend composition validation
+# Full AI composition validation
 
 on:
   push:
@@ -27,6 +27,7 @@ jobs:
           git clone --depth 1 https://github.com/zk198/agent-core.git ../agent-core
           git clone --depth 1 https://github.com/zk198/agent-tools-web.git ../agent-tools-web
           git clone --depth 1 https://github.com/zk198/agent-tools-code.git ../agent-tools-code
+          git clone --depth 1 https://github.com/zk198/ai-ui.git ../ai-ui
       - name: Validate integrated Compose
         env:
           RAG_JWT_SECRET: ci-test-secret
