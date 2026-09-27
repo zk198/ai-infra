@@ -1,6 +1,6 @@
 # AI Infrastructure
 
-Local integration composition for the AI stack.
+Local integration composition for the AI stack, including the RAG platform, agent/tool services, gateway, UI, and optional local LLM runtime.
 
 The application repositories own their service Compose definitions. This repository uses Compose `include` rather than duplicating those service definitions.
 
