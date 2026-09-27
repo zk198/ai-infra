@@ -39,3 +39,8 @@ docker compose -f compose.yaml -f compose.llm.yaml up --build
 The AI gateway is exposed on port 8200; internal agent/tool services are not published to the host. PostgreSQL remains the authoritative source of truth and Qdrant is a rebuildable search index.
 
 Qdrant is pinned to v1.19.1 for reproducible local integration. Production image digests and registry-based deployment are handled in Part 2.
+
+
+## Stack health validation
+
+After starting the base stack, run `sh scripts/check-stack-health.sh`. For the optional GPU LLM stack, run `sh scripts/check-stack-health.sh llm`. The script checks externally published endpoints and internal agent/gateway readiness and prints Compose state/logs on failure.
