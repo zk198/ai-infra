@@ -15,13 +15,13 @@ def test_compose_includes_backend_service_repositories():
     assert "../agent-tools-code/docker-compose.yml" in compose
 
 
-def test_qdrant_is_version_pinned_and_persistent():
+def test_qdrant_is_version_pinned_persistent_and_internal():
     compose = (ROOT / "compose.yaml").read_text()
 
     assert "qdrant/qdrant:v1.19.1" in compose
     assert "qdrant-data:/qdrant/storage" in compose
-    assert "6333:6333" in compose
-    assert "6334:6334" in compose
+    assert "6333:6333" not in compose
+    assert "6334:6334" not in compose
 
 
 def test_environment_has_no_default_secret():
