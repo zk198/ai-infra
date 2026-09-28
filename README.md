@@ -8,7 +8,7 @@ The application repositories own their service Compose definitions. This reposit
 
 Check out these repositories as siblings:
 
-```
+```text
 ai-infra/
 rag-ingestion/
 rag-indexer/
@@ -24,22 +24,21 @@ llm-inference/
 
 Then copy `.env.example` to `.env`, set a real JWT secret, and run the base stack:
 
-```
+```bash
 docker compose up --build
 ```
 
 For the complete local stack, including Bifrost and GPU-backed SGLang, check out `llm-gateway/` and `llm-inference/` as siblings and run:
 
-```
+```bash
 docker compose -f compose.yaml -f compose.llm.yaml up --build
 ```
 
 `compose.llm.yaml` includes the private LLM service definitions and adds the internal DNS aliases expected by `agent-core` (`llm-gateway`) and Bifrost (`llm-inference`). It removes their host port publishing; they remain reachable on the internal Compose network. The GPU requirement is isolated to `llm-inference`; Bifrost itself is a CPU/network gateway.
 
-The AI gateway is exposed on port 8200; internal agent/tool services are not published to the host. PostgreSQL remains the authoritative source of truth and Qdrant is a rebuildable search index.
+The AI gateway is the only application service exposed on the host by the base integration stack. Internal agent/tool, PostgreSQL, Qdrant, and LLM services remain on the Compose network. PostgreSQL is the authoritative source of truth and Qdrant is a rebuildable search index.
 
 Qdrant is pinned to v1.19.1 for reproducible local integration. Production image digests and registry-based deployment are handled in Part 2.
-
 
 ## Stack health validation
 
