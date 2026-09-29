@@ -36,3 +36,22 @@ def test_integrated_compose_does_not_redefine_included_services():
     assert "  agent-core:" not in compose
     assert "  web:" not in compose
     assert "../ai-gateway/compose.yaml" in compose
+
+
+def test_startup_script_validates_docker_env_and_compose_mode():
+    script = (ROOT / "scripts/start-local.sh").read_text()
+
+    assert 'mode="${1:-base}"' in script
+    assert "docker info" in script
+    assert "cp .env.example .env" in script
+    assert "docker compose $compose_files config" in script
+    assert "docker compose $compose_files up -d --build" in script
+    assert 'check-stack-health.sh "$mode"' in script
+
+
+def test_health_check_keeps_qdrant_internal():
+    script = (ROOT / "scripts/check-stack-health.sh").read_text()
+
+    assert "http://localhost:6333/healthz" in script
+    assert "check_qdrant" in script
+    assert 'check_host "Qdrant"' not in script
