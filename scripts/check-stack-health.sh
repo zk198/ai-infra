@@ -1,9 +1,13 @@
 #!/usr/bin/env sh
 set -eu
 
+mode="${1:-base}"
 compose="docker compose -f compose.yaml"
-if [ "${1:-base}" = "llm" ]; then
+if [ "$mode" = "llm" ]; then
   compose="$compose -f compose.llm.yaml"
+elif [ "$mode" != "base" ]; then
+  echo "Usage: sh scripts/check-stack-health.sh [base|llm]" >&2
+  exit 2
 fi
 
 fail=0
@@ -19,13 +23,18 @@ check_exec() {
   if $compose exec -T "$service" python -c 'import sys,urllib.request; urllib.request.urlopen(sys.argv[1], timeout=5).read()' "$url" >/dev/null 2>&1; then echo ok; else echo failed; fail=1; fi
 }
 
+check_qdrant() {
+  printf '%s: ' "Qdrant"
+  if $compose exec -T qdrant wget --spider -q --timeout=5 http://localhost:6333/healthz >/dev/null 2>&1; then echo ok; else echo failed; fail=1; fi
+}
+
 check_host "AI gateway" "http://localhost:8200/health"
 check_host "AI UI" "http://localhost:3000/"
-check_host "Qdrant" "http://localhost:6333/healthz"
+check_qdrant
 check_exec "Agent core readiness" "agent-core" "http://localhost:8000/api/v1/ready"
 check_exec "Gateway readiness" "ai-gateway" "http://localhost:8200/ready"
 
-if [ "${1:-base}" = "llm" ]; then
+if [ "$mode" = "llm" ]; then
   check_exec "SGLang health" "inference" "http://localhost:30000/health"
   check_exec "Bifrost HTTP" "gateway" "http://localhost:8080/"
 fi
