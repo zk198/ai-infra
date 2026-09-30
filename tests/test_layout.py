@@ -31,12 +31,9 @@ def test_environment_has_no_default_secret():
     assert "replace-me" not in env
 
 
-def test_integrated_compose_only_overrides_deployment_environment_for_included_services():
+def test_integrated_compose_does_not_redefine_included_services():
     compose = (ROOT / "compose.yaml").read_text()
-    assert "  agent-core:" in compose
-    assert "AGENT_MODEL_BASE_URL:" in compose
-    assert "AGENT_MCP_SERVERS:" in compose
-    assert "AGENT_LAYA_URL:" in compose
+    assert "  agent-core:" not in compose
     assert "  web:" not in compose
     assert "../ai-gateway/compose.yaml" in compose
 
