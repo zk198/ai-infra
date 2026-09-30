@@ -1,0 +1,51 @@
+services:
+  laya:
+    build:
+      context: ../laya
+      args:
+        TORCH_INDEX: "${LAYA_TORCH_INDEX:-cpu}"
+        TORCH_VERSION: "${LAYA_TORCH_VERSION:-2.14.0}"
+    command: ["laya-serve"]
+    expose:
+      - "8000"
+    environment:
+      LAYA_HOST: "0.0.0.0"
+      LAYA_PORT: "8000"
+      LAYA_DEVICE: "${LAYA_DEVICE:-cpu}"
+      LAYA_PRELOAD: "${LAYA_PRELOAD:-0}"
+      LAYA_MODELS: "${LAYA_MODELS:-english,multilingual}"
+      LAYA_THREADS: "${LAYA_THREADS:-4}"
+      LAYA_MAX_LOADED: "${LAYA_MAX_LOADED:-2}"
+      LAYA_MAX_CONCURRENT: "${LAYA_MAX_CONCURRENT:-16}"
+      LAYA_MAX_TOKEN_BUDGET: "${LAYA_MAX_TOKEN_BUDGET:-8192}"
+      LAYA_LOG_LEVEL: "${LAYA_LOG_LEVEL:-info}"
+      LAYA_API_KEY: "${LAYA_API_KEY:-}"
+      HF_TOKEN: "${HF_TOKEN:-}"
+    volumes:
+      - laya-model-cache:/home/laya/.cache/huggingface
+    init: true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=4)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10m
+      start_interval: 2s
+
+  ai-gateway:
+    environment:
+      LAYA_ENABLED: "${LAYA_ENABLED:-true}"
+      LAYA_URL: "http://laya:8000"
+      LAYA_TIMEOUT_SECONDS: "${LAYA_TIMEOUT_SECONDS:-5}"
+      LAYA_API_KEY: "${LAYA_API_KEY:-}"
+
+  agent-core:
+    environment:
+      AGENT_LAYA_ENABLED: "${LAYA_ENABLED:-true}"
+      AGENT_LAYA_URL: "http://laya:8000"
+      AGENT_LAYA_TIMEOUT_SECONDS: "${LAYA_TIMEOUT_SECONDS:-5}"
+      AGENT_LAYA_API_KEY: "${LAYA_API_KEY:-}"
+
+volumes:
+  laya-model-cache:
