@@ -46,6 +46,8 @@ services:
       AGENT_LAYA_URL: "http://laya:8000"
       AGENT_LAYA_TIMEOUT_SECONDS: "${LAYA_TIMEOUT_SECONDS:-5}"
       AGENT_LAYA_API_KEY: "${LAYA_API_KEY:-}"
+      AGENT_LAYA_QUESTIONS_JSON: >-
+        {"request_type":{"type":"choice","instructions":"Classify the request type.","criteria":{"knowledge":"asks for information or explanation","action":"asks to perform or plan an action","other":"other"}}}
 
 volumes:
   laya-model-cache:
