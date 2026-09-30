@@ -28,6 +28,7 @@ jobs:
           git clone --depth 1 https://github.com/zk198/agent-tools-web.git ../agent-tools-web
           git clone --depth 1 https://github.com/zk198/agent-tools-code.git ../agent-tools-code
           git clone --depth 1 https://github.com/zk198/ai-ui.git ../ai-ui
+          git clone --depth 1 https://github.com/zk198/laya.git ../laya
       - name: Validate stack health script syntax
         run: |
           sh -n scripts/check-stack-health.sh
@@ -35,6 +36,11 @@ jobs:
         env:
           RAG_JWT_SECRET: ci-test-secret
         run: docker compose config
+      - name: Validate optional Laya Compose
+        env:
+          RAG_JWT_SECRET: ci-test-secret
+          LAYA_ENABLED: "true"
+        run: docker compose -f compose.yaml -f compose.laya.yaml config
       - name: Validate optional LLM Compose when sibling repos are available
         env:
           RAG_JWT_SECRET: ci-test-secret

@@ -5,8 +5,10 @@ mode="${1:-base}"
 compose="docker compose -f compose.yaml"
 if [ "$mode" = "llm" ]; then
   compose="$compose -f compose.llm.yaml"
+elif [ "$mode" = "laya" ]; then
+  compose="$compose -f compose.laya.yaml"
 elif [ "$mode" != "base" ]; then
-  echo "Usage: sh scripts/check-stack-health.sh [base|llm]" >&2
+  echo "Usage: sh scripts/check-stack-health.sh [base|laya|llm]" >&2
   exit 2
 fi
 
@@ -34,7 +36,9 @@ check_qdrant
 check_exec "Agent core readiness" "agent-core" "http://localhost:8000/api/v1/ready"
 check_exec "Gateway readiness" "ai-gateway" "http://localhost:8200/ready"
 
-if [ "$mode" = "llm" ]; then
+if [ "$mode" = "laya" ]; then
+  check_exec "Laya health" "laya" "http://localhost:8000/health"
+elif [ "$mode" = "llm" ]; then
   check_exec "SGLang health" "inference" "http://localhost:30000/health"
   check_exec "Bifrost HTTP" "gateway" "http://localhost:8080/"
 fi
