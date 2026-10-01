@@ -32,7 +32,7 @@ AI_GATEWAY_HEALTH_URL="${AI_GATEWAY_HEALTH_URL:-http://localhost:$AI_GATEWAY_POR
 AI_UI_URL="${AI_UI_URL:-http://localhost:$AI_UI_PORT/}"
 # Internal endpoints are explicitly configured in .env.example and use
 # container-localhost because these probes execute inside each target container.
-: "${QDRANT_HEALTH_URL:?Set QDRANT_HEALTH_URL in .env}"
+QDRANT_HEALTH_URL="${QDRANT_HEALTH_URL:-http://localhost:6333/healthz}"
 : "${AGENT_CORE_READY_URL:?Set AGENT_CORE_READY_URL in .env}"
 : "${AI_GATEWAY_READY_URL:?Set AI_GATEWAY_READY_URL in .env}"
 : "${LAYA_HEALTH_URL:?Set LAYA_HEALTH_URL in .env}"
