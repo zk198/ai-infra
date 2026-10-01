@@ -30,13 +30,14 @@ AI_UI_PORT="${AI_UI_PORT:-3000}"
 # Host-published endpoints derive from the same port variables as Compose.
 AI_GATEWAY_HEALTH_URL="${AI_GATEWAY_HEALTH_URL:-http://localhost:$AI_GATEWAY_PORT/health}"
 AI_UI_URL="${AI_UI_URL:-http://localhost:$AI_UI_PORT/}"
-# Internal endpoints use Compose service DNS and container ports.
-QDRANT_HEALTH_URL="${QDRANT_HEALTH_URL:-http://localhost:6333/healthz}"
-AGENT_CORE_READY_URL="${AGENT_CORE_READY_URL:-http://localhost:8000/api/v1/ready}"
-AI_GATEWAY_READY_URL="${AI_GATEWAY_READY_URL:-http://localhost:8200/ready}"
-LAYA_HEALTH_URL="${LAYA_HEALTH_URL:-http://localhost:8000/health}"
-SGLANG_HEALTH_URL="${SGLANG_HEALTH_URL:-http://localhost:30000/health}"
-BIFROST_HEALTH_URL="${BIFROST_HEALTH_URL:-http://localhost:8080/}"
+# Internal endpoints are explicitly configured in .env.example and use
+# container-localhost because these probes execute inside each target container.
+: "${QDRANT_HEALTH_URL:?Set QDRANT_HEALTH_URL in .env}"
+: "${AGENT_CORE_READY_URL:?Set AGENT_CORE_READY_URL in .env}"
+: "${AI_GATEWAY_READY_URL:?Set AI_GATEWAY_READY_URL in .env}"
+: "${LAYA_HEALTH_URL:?Set LAYA_HEALTH_URL in .env}"
+: "${SGLANG_HEALTH_URL:?Set SGLANG_HEALTH_URL in .env}"
+: "${BIFROST_HEALTH_URL:?Set BIFROST_HEALTH_URL in .env}"
 
 fail=0
 check_host() {
